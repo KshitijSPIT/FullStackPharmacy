@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Bills</title>
+  <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+  <div class="header">
+    <button onclick="window.location.href='welcome.html'">Back to Home</button>
+    <h1>Manage Bills</h1>
+  </div>
+
+  <div class="action-buttons">
+    <button onclick="showSection('addBill')">Add New Bill</button>
+    <button onclick="showSection('fetchBills')">Fetch All Bills</button>
+    <button onclick="showSection('updateBill')">Update Bill</button>
+    <button onclick="showSection('deleteBill')">Delete Bill</button>
+  </div>
+
+  <!-- Add Bill Section -->
+  <div id="addBill" class="action-section" style="display: none;">
+    <h2>Add New Bill</h2>
+    <form id="addBillForm">
+      <input type="number" name="BillAmount" placeholder="Amount" required>
+      <input type="date" name="BillDate" placeholder="Date" required>
+      <input type="text" name="BillDetails" placeholder="Details" required>
+      <button type="submit">Add Bill</button>
+    </form>
+  </div>
+
+  <!-- Fetch Bills Section -->
+  <div id="fetchBills" class="action-section" style="display: none;">
+    <h2>All Bills</h2>
+    <div id="billList"></div>
+    <button onclick="fetchRecords('bills', 'billList')">Fetch Bills</button>
+  </div>
+
+  <!-- Update Bill Section -->
+  <div id="updateBill" class="action-section" style="display: none;">
+    <h2>Update Bill</h2>
+    <form id="updateBillForm">
+      <input type="number" name="id" id="UpdateBillID" placeholder="Bill ID" required>
+      <input type="number" name="BillAmount" id="UpdateBillAmount" placeholder="Amount">
+      <input type="date" name="BillDate" id="UpdateBillDate" placeholder="Date">
+      <input type="text" name="BillDetails" id="UpdateBillDetails" placeholder="Details">
+      <button type="submit">Update Bill</button>
+    </form>
+  </div>
+
+  <!-- Delete Bill Section -->
+  <div id="deleteBill" class="action-section" style="display: none;">
+    <h2>Delete Bill</h2>
+    <form id="deleteBillForm">
+      <input type="number" id="DeleteBillID" name="id" placeholder="Bill ID" required>
+      <button type="submit">Delete Bill</button>
+    </form>
+  </div>
+
+  <script>
+    // Function to show/hide sections
+    function showSection(sectionId) {
+      // Hide all action sections
+      const sections = document.querySelectorAll('.action-section');
+      sections.forEach(section => section.style.display = 'none');
+      
+      // Show selected section
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+    // Event listeners for form submissions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add Bill
+      document.getElementById('addBillForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        addRecord('bills', 'addBillForm');
+      });
+
+      // Update Bill
+      document.getElementById('updateBillForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        updateRecord('bills', 'updateBillForm', 'UpdateBillID');
+      });
+
+      // Delete Bill
+      document.getElementById('deleteBillForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('DeleteBillID').value;
+        deleteRecord('bills', id);
+      });
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

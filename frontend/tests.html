@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check Tests</title>
+  <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+  <div class="header">
+    <button onclick="window.location.href='welcome.html'">Back to Home</button>
+    <h1>Check Tests</h1>
+  </div>
+
+  <div class="action-buttons">
+    <button onclick="showSection('addTest')">Add New Test</button>
+    <button onclick="showSection('fetchTests')">Fetch All Tests</button>
+    <button onclick="showSection('updateTest')">Update Test</button>
+    <button onclick="showSection('deleteTest')">Delete Test</button>
+  </div>
+
+  <!-- Add Test Section -->
+  <div id="addTest" class="action-section" style="display: none;">
+    <h2>Add New Test</h2>
+    <form id="addTestForm">
+      <input type="text" name="TestName" placeholder="Test Name" required>
+      <input type="text" name="TestDate" placeholder="Date" required>
+      <input type="number" name="TestFee" placeholder="Fee" required>
+      <button type="submit">Add Test</button>
+    </form>
+  </div>
+
+  <!-- Fetch Tests Section -->
+  <div id="fetchTests" class="action-section" style="display: none;">
+    <h2>All Tests</h2>
+    <div id="testList"></div>
+    <button onclick="fetchRecords('tests', 'testList')">Fetch Tests</button>
+  </div>
+
+  <!-- Update Test Section -->
+  <div id="updateTest" class="action-section" style="display: none;">
+    <h2>Update Test</h2>
+    <form id="updateTestForm">
+      <input type="number" name="id" id="UpdateTestID" placeholder="Test ID" required>
+      <input type="text" name="TestName" id="UpdateTestName" placeholder="Test Name">
+      <input type="text" name="TestDate" id="UpdateTestDate" placeholder="Date">
+      <input type="number" name="TestFee" id="UpdateTestFee" placeholder="Fee">
+      <button type="submit">Update Test</button>
+    </form>
+  </div>
+
+  <!-- Delete Test Section -->
+  <div id="deleteTest" class="action-section" style="display: none;">
+    <h2>Delete Test</h2>
+    <form id="deleteTestForm">
+      <input type="number" id="DeleteTestID" name="id" placeholder="Test ID" required>
+      <button type="submit">Delete Test</button>
+    </form>
+  </div>
+
+  <script>
+    // Function to show/hide sections
+    function showSection(sectionId) {
+      // Hide all action sections
+      const sections = document.querySelectorAll('.action-section');
+      sections.forEach(section => section.style.display = 'none');
+      
+      // Show selected section
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+    // Event listeners for form submissions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add Test
+      document.getElementById('addTestForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        addRecord('tests', 'addTestForm');
+      });
+
+      // Update Test
+      document.getElementById('updateTestForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        updateRecord('tests', 'updateTestForm', 'UpdateTestID');
+      });
+
+      // Delete Test
+      document.getElementById('deleteTestForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('DeleteTestID').value;
+        deleteRecord('tests', id);
+      });
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>

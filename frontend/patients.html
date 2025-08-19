@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Patients</title>
+  <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+  <div class="header">
+    <button onclick="window.location.href='welcome.html'">Back to Home</button>
+    <h1>Manage Patients</h1>
+  </div>
+
+  <div class="action-buttons">
+    <button onclick="showSection('addPatient')">Add New Patient</button>
+    <button onclick="showSection('fetchPatients')">Fetch All Patients</button>
+    <button onclick="showSection('updatePatient')">Update Patient</button>
+    <button onclick="showSection('deletePatient')">Delete Patient</button>
+  </div>
+
+  <!-- Add Patient Section -->
+  <div id="addPatient" class="action-section" style="display: none;">
+    <h2>Add New Patient</h2>
+    <form id="addPatientForm">
+      <input type="text" name="PName" placeholder="Name" required>
+      <input type="text" name="PAddress" placeholder="Address" required>
+      <input type="number" name="PAge" placeholder="Age" required>
+      <input type="text" name="PGender" placeholder="Gender" required>
+      <input type="text" name="PBloodGroup" placeholder="Blood Group" required>
+      <input type="date" name="PDOB" required>
+      <input type="text" name="Contact" placeholder="Contact" required>
+      <button type="submit">Add Patient</button>
+    </form>
+  </div>
+
+  <!-- Fetch Patients Section -->
+  <div id="fetchPatients" class="action-section" style="display: none;">
+    <h2>All Patients</h2>
+    <div id="patientList"></div>
+    <button onclick="fetchRecords('patients', 'patientList')">Fetch Patients</button>
+  </div>
+
+<!-- Update Patient Section -->
+<div id="updatePatient" class="action-section" style="display: none;">
+  <h2>Update Patient</h2>
+  <form id="updatePatientForm">
+    <input type="number" name="id" id="UpdatePID" placeholder="Patient ID" required>
+    <input type="text" name="PName" id="UpdatePName" placeholder="Name">
+    <input type="text" name="PAddress" id="UpdatePAddress" placeholder="Address">
+    <input type="number" name="PAge" id="UpdatePAge" placeholder="Age">
+    <input type="text" name="PGender" id="UpdatePGender" placeholder="Gender">
+    <input type="text" name="PBloodGroup" id="UpdatePBloodGroup" placeholder="Blood Group">
+    <input type="date" name="PDOB" id="UpdatePDOB">
+    <input type="text" name="Contact" id="UpdateContact" placeholder="Contact">
+    <button type="submit">Update Patient</button>
+  </form>
+</div>
+
+<div id="deletePatient" class="action-section" style="display: none;">
+  <h2>Delete Patient</h2>
+  <form id="deletePatientForm">
+    <input type="number" id="DeletePID" name="id" placeholder="Patient ID" required>
+    <button type="submit" onclick="deletePatientHandler()">Delete Patient</button>
+  </form>
+</div>
+
+<script>
+function deletePatientHandler() {
+  const id = document.getElementById('DeletePID').value;
+  deleteRecord('patients', id);
+  return false; // Prevent form submission
+}
+</script>
+  <script>
+    // Function to show/hide sections
+    function showSection(sectionId) {
+      // Hide all action sections
+      const sections = document.querySelectorAll('.action-section');
+      sections.forEach(section => section.style.display = 'none');
+      
+      // Show selected section
+      document.getElementById(sectionId).style.display = 'block';
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

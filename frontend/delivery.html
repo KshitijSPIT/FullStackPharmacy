@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Deliveries</title>
+  <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+  <div class="header">
+    <button onclick="window.location.href='welcome.html'">Back to Home</button>
+    <h1>Manage Deliveries</h1>
+  </div>
+
+  <div class="action-buttons">
+    <button onclick="showSection('addDelivery')">Add New Delivery</button>
+    <button onclick="showSection('fetchDeliveries')">Fetch All Deliveries</button>
+    <button onclick="showSection('updateDelivery')">Update Delivery</button>
+    <button onclick="showSection('deleteDelivery')">Delete Delivery</button>
+  </div>
+
+  <!-- Add Delivery Section -->
+  <div id="addDelivery" class="action-section" style="display: none;">
+    <h2>Add New Delivery</h2>
+    <form id="addDeliveryForm">
+      <input type="text" name="DeliveryAddress" placeholder="Address" required>
+      <input type="date" name="DeliveryDate" placeholder="Date" required>
+      <input type="text" name="DeliveryStatus" placeholder="Status" required>
+      <button type="submit">Add Delivery</button>
+    </form>
+  </div>
+
+  <!-- Fetch Deliveries Section -->
+  <div id="fetchDeliveries" class="action-section" style="display: none;">
+    <h2>All Deliveries</h2>
+    <div id="deliveryList"></div>
+    <button onclick="fetchRecords('deliveries', 'deliveryList')">Fetch Deliveries</button>
+  </div>
+
+  <!-- Update Delivery Section -->
+  <div id="updateDelivery" class="action-section" style="display: none;">
+    <h2>Update Delivery</h2>
+    <form id="updateDeliveryForm">
+      <input type="number" name="id" id="UpdateDeliveryID" placeholder="Delivery ID" required>
+      <input type="text" name="DeliveryAddress" id="UpdateDeliveryAddress" placeholder="Address">
+      <input type="date" name="DeliveryDate" id="UpdateDeliveryDate" placeholder="Date">
+      <input type="text" name="DeliveryStatus" id="UpdateDeliveryStatus" placeholder="Status">
+      <button type="submit">Update Delivery</button>
+    </form>
+  </div>
+
+  <!-- Delete Delivery Section -->
+  <div id="deleteDelivery" class="action-section" style="display: none;">
+    <h2>Delete Delivery</h2>
+    <form id="deleteDeliveryForm">
+      <input type="number" id="DeleteDeliveryID" name="id" placeholder="Delivery ID" required>
+      <button type="submit">Delete Delivery</button>
+    </form>
+  </div>
+
+  <script>
+    // Function to show/hide sections
+    function showSection(sectionId) {
+      // Hide all action sections
+      const sections = document.querySelectorAll('.action-section');
+      sections.forEach(section => section.style.display = 'none');
+      
+      // Show selected section
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+    // Event listeners for form submissions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add Delivery
+      document.getElementById('addDeliveryForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        addRecord('deliveries', 'addDeliveryForm');
+      });
+
+      // Update Delivery
+      document.getElementById('updateDeliveryForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        updateRecord('deliveries', 'updateDeliveryForm', 'UpdateDeliveryID');
+      });
+
+      // Delete Delivery
+      document.getElementById('deleteDeliveryForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('DeleteDeliveryID').value;
+        deleteRecord('deliveries', id);
+      });
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

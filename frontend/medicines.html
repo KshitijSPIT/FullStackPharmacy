@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Medicines</title>
+  <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+  <div class="header">
+    <button onclick="window.location.href='welcome.html'">Back to Home</button>
+    <h1>Manage Medicines</h1>
+  </div>
+
+  <div class="action-buttons">
+    <button onclick="showSection('addMedicine')">Add New Medicine</button>
+    <button onclick="showSection('fetchMedicines')">Fetch All Medicines</button>
+    <button onclick="showSection('updateMedicine')">Update Medicine</button>
+    <button onclick="showSection('deleteMedicine')">Delete Medicine</button>
+  </div>
+
+  <!-- Add Medicine Section -->
+  <div id="addMedicine" class="action-section" style="display: none;">
+    <h2>Add New Medicine</h2>
+    <form id="addMedicineForm">
+      <input type="text" name="MName" placeholder="Medicine Name" required>
+      <input type="text" name="MCategory" placeholder="Category" required>
+      <input type="number" name="MStock" placeholder="Stock Quantity" required>
+      <input type="number" name="MPrice" placeholder="Price" required>
+      <input type="date" name="MExpiry" placeholder="Expiry Date" required>
+      <button type="submit">Add Medicine</button>
+    </form>
+  </div>
+
+ <!-- Fetch Medicines Section -->
+<div id="fetchMedicines" class="action-section" style="display: none;">
+    <h2>All Medicines</h2>
+    <div id="medicineList"></div>
+    <button onclick="fetchRecords('medicines', 'medicineList')">Fetch Medicines</button>
+  </div>
+
+  <!-- Update Medicine Section -->
+  <div id="updateMedicine" class="action-section" style="display: none;">
+    <h2>Update Medicine</h2>
+    <form id="updateMedicineForm">
+      <input type="number" name="id" id="UpdateMID" placeholder="Medicine ID" required>
+      <input type="text" name="MName" id="UpdateMName" placeholder="Medicine Name">
+      <input type="text" name="MCategory" id="UpdateMCategory" placeholder="Category">
+      <input type="number" name="MStock" id="UpdateMStock" placeholder="Stock Quantity">
+      <input type="number" name="MPrice" id="UpdateMPrice" placeholder="Price">
+      <input type="date" name="MExpiry" id="UpdateMExpiry" placeholder="Expiry Date">
+      <button type="submit">Update Medicine</button>
+    </form>
+  </div>
+
+  <!-- Delete Medicine Section -->
+  <div id="deleteMedicine" class="action-section" style="display: none;">
+    <h2>Delete Medicine</h2>
+    <form id="deleteMedicineForm">
+      <input type="number" id="DeleteMID" name="id" placeholder="Medicine ID" required>
+      <button type="submit">Delete Medicine</button>
+    </form>
+  </div>
+
+  <script>
+    // Function to show/hide sections
+    function showSection(sectionId) {
+      // Hide all action sections
+      const sections = document.querySelectorAll('.action-section');
+      sections.forEach(section => section.style.display = 'none');
+      
+      // Show selected section
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+    // Event listeners for form submissions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add Medicine
+      document.getElementById('addMedicineForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        addRecord('medicines', 'addMedicineForm');
+      });
+
+      // Update Medicine
+      document.getElementById('updateMedicineForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        updateRecord('medicines', 'updateMedicineForm', 'UpdateMID');
+      });
+
+      // Delete Medicine
+      document.getElementById('deleteMedicineForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('DeleteMID').value;
+        deleteRecord('medicines', id);
+      });
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
